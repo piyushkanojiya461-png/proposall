@@ -40,7 +40,7 @@ body{
   to{transform:scale(1);opacity:1;}
 }
 
-/* Image circle */
+/* Image */
 .photo{
   width:180px;
   height:180px;
@@ -81,7 +81,7 @@ button{
   position:absolute;
 }
 
-/* Hearts animation */
+/* Hearts */
 .heart{
   position:absolute;
   font-size:22px;
@@ -97,6 +97,7 @@ button{
 
 <body>
 
+<!-- 🎵 AUDIO (ROOT FILE) -->
 <audio id="song">
   <source src="./love.mp3" type="audio/mpeg">
 </audio>
@@ -116,39 +117,48 @@ button{
 const HER_NAME = "Deepu";
 const YOUR_NAME = "Piu";
 
-function showLove(){
-  document.getElementById("song").play().catch(()=>{});
+/* ROOT images */
+const images = [
+  "./pu1.jpg",
+  "./pu2.jpg",
+  "./pu3.jpg",
+  "./pu4.jpg",
+  "./pu5.jpg",
+  "./pu6.jpg"
+];
 
+let imgIndex = 0;
+let intervalId;
+
+function showLove(){
   document.getElementById("card").innerHTML = `
     <h2>I LOVE YOU ❤️</h2>
 
-    <img src="photos/pu1.jpg" class="photo" id="mainPhoto">
+    <img src="${images[0]}" class="photo" id="mainPhoto">
 
     <p style="font-size:18px;">
-      <b>${Deepu}</b>,<br><br>
+      <b>${HER_NAME}</b>,<br><br>
       from this moment and forever…<br>
       I choose you,<br>
       no matter the distance,<br>
       no matter the time.
     </p>
 
-    <p>— Yours always,<br><b>${Piu}</b></p>
+    <p>— Yours always,<br><b>${YOUR_NAME}</b></p>
 
     <button class="yes" onclick="playSong()">▶️ Play Our Song 🎵</button>
   `;
 
+  startImageAnimation();
   startHearts();
-  startImageChange();
 }
 
-/* Image animation (guaranteed visible) */
-let imgs = ["./pu1.jpg","./pu2.jpg","./pu3.jpg","./pu4.jpg","./pu5.jpg","./pu6.jpg"];
-let i = 0;
-function startImageChange(){
-  setInterval(()=>{
-    i = (i+1)%imgs.length;
-    document.getElementById("mainPhoto").src = imgs[i];
-  },2500);
+/* Image slideshow animation */
+function startImageAnimation(){
+  intervalId = setInterval(()=>{
+    imgIndex = (imgIndex + 1) % images.length;
+    document.getElementById("mainPhoto").src = images[imgIndex];
+  }, 2500);
 }
 
 /* Hearts */
@@ -163,9 +173,10 @@ function startHearts(){
   }
 }
 
-/* Music manual */
+/* Music manual play (browser safe) */
 function playSong(){
-  document.getElementById("song").play();
+  document.getElementById("song").play()
+    .catch(()=>alert("Tap again to play music 🎵"));
 }
 
 /* NO button run */
@@ -178,5 +189,6 @@ noBtn.addEventListener("mouseover",()=>{
 
 </body>
 </html>
+
 
 
