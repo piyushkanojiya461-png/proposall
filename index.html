@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  color:white;
+}
+
+/* Card animation */
+.card{
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(14px);
+  padding:30px;
+  border-radius:25px;
+  width:90%;
+  max-width:380px;
+  text-align:center;
+  animation:zoomIn 1.2s ease;
+}
+
+@keyframes zoomIn{
+  from{transform:scale(0.6);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+
+/* Image circle */
+.photo{
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  border:4px solid white;
+  object-fit:cover;
+  margin:20px auto;
+  display:block;
+  animation:pulse 3s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 0 rgba(255,255,255,0.6);}
+  50%{box-shadow:0 0 30px rgba(255,255,255,0.9);}
+  100%{box-shadow:0 0 0 rgba(255,255,255,0.6);}
+}
+
+/* Buttons */
+button{
+  padding:12px 26px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  margin:10px;
+}
+
+.yes{
+  background:white;
+  color:#ff4f81;
+  font-weight:bold;
+}
+
+.no{
+  background:transparent;
+  border:2px solid white;
+  color:white;
+  position:absolute;
+}
+
+/* Hearts animation */
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation:float 6s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(0);opacity:1;}
+  100%{transform:translateY(-800px);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="song">
+  <source src="music/love.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" id="card">
+  <h2>Hey ❤️</h2>
+  <p>
+    Even with miles between us,<br>
+    my heart chooses you every day.
+  </p>
+
+  <button class="yes" onclick="showLove()">YES 💖</button>
+  <button class="no" id="noBtn">NO 😢</button>
+</div>
+
+<script>
+const HER_NAME = "Deepu";
+const YOUR_NAME = "Piu";
+
+function showLove(){
+  document.getElementById("song").play().catch(()=>{});
+
+  document.getElementById("card").innerHTML = `
+    <h2>I LOVE YOU ❤️</h2>
+
+    <img src="photos/pu1.jpg" class="photo" id="mainPhoto">
+
+    <p style="font-size:18px;">
+      <b>${HER_NAME}</b>,<br><br>
+      from this moment and forever…<br>
+      I choose you,<br>
+      no matter the distance,<br>
+      no matter the time.
+    </p>
+
+    <p>— Yours always,<br><b>${YOUR_NAME}</b></p>
+
+    <button class="yes" onclick="playSong()">▶️ Play Our Song 🎵</button>
+  `;
+
+  startHearts();
+  startImageChange();
+}
+
+/* Image animation (guaranteed visible) */
+let imgs = ["photos/pu1.jpg","photos/pu2.jpg","photos/pu3.jpg","photos/pu4.jpg"];
+let i = 0;
+function startImageChange(){
+  setInterval(()=>{
+    i = (i+1)%imgs.length;
+    document.getElementById("mainPhoto").src = imgs[i];
+  },2500);
+}
+
+/* Hearts */
+function startHearts(){
+  for(let i=0;i<25;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(Math.random()*3+3)+"s";
+    document.body.appendChild(h);
+  }
+}
+
+/* Music manual */
+function playSong(){
+  document.getElementById("song").play();
+}
+
+/* NO button run */
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.left=Math.random()*80+"%";
+  noBtn.style.top=Math.random()*80+"%";
+});
+</script>
+
+</body>
+</html>
