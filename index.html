@@ -98,8 +98,9 @@ button{
 <body>
 
 <!-- 🎵 AUDIO (ROOT FILE) -->
-<audio id="song">
+<audio id="song" preload="auto">
   <source src="./love.mp3" type="audio/mpeg">
+  Your browser does not support audio.
 </audio>
 
 <div class="card" id="card">
@@ -175,20 +176,22 @@ function startHearts(){
 
 /* Music manual play (browser safe) */
 function playSong(){
-  document.getElementById("song").play()
-    .catch(()=>alert("Tap again to play music 🎵"));
+  const audio = document.getElementById("song");
+  audio.muted = false;      // ensure not muted
+  audio.currentTime = 0;   // start from beginning
+  audio.play().then(()=>{
+    console.log("Audio playing");
+  }).catch(err=>{
+    alert("Play button dobara tap karo 🎵");
+    console.error(err);
+  });
 }
 
-/* NO button run */
-const noBtn=document.getElementById("noBtn");
-noBtn.addEventListener("mouseover",()=>{
-  noBtn.style.left=Math.random()*80+"%";
-  noBtn.style.top=Math.random()*80+"%";
-});
 </script>
 
 </body>
 </html>
+
 
 
 
